@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>CraftNest · Products</title>
+  <link rel="icon" type="image/jpeg" href="images/hero 1.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ===== RESET & BASE ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f7f3ec;
+      --bg-dark: #3a2e26;
+      --text-primary: #3a2e26;
+      --text-secondary: #7a6a5c;
+      --text-light: #b0a294;
+      --border-color: #e8e0d4;
+      --accent: #7c5c3e;
+      --accent-light: #a8836a;
+      --accent-dark: #5a3f2a;
+      --accent-soft: #f5efe6;
+      --shadow: rgba(58, 46, 38, 0.08);
+      --card-bg: #ffffff;
+      --section-bg: #f7f3ec;
+      --navbar-bg: linear-gradient(135deg, #7c5c3e, #5a3f2a);
+      --navbar-border: #5a3f2a;
+      --transition: 0.3s ease;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #1c1814;
+      --bg-secondary: #14110d;
+      --text-primary: #f0e9df;
+      --text-secondary: #b5a695;
+      --text-light: #7a6a5c;
+      --border-color: #2b241d;
+      --shadow: rgba(0, 0, 0, 0.6);
+      --card-bg: #1c1814;
+      --section-bg: #14110d;
+      --navbar-bg: #1c1814;
+      --navbar-border: #2b241d;
+      --accent-soft: #2a211a;
+    }
+
+    [dir="rtl"] { text-align: right; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: background var(--transition), color var(--transition);
+      overflow-x: hidden;
+    }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--navbar-border);
+      background: var(--navbar-bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: background var(--transition), border-color var(--transition);
+    }
+    .navbar .logo-text,
+    .navbar .nav-links > li > a { color: #ffffff !important; }
+    .navbar .logo-text span { color: #ffffff !important; opacity: 0.7; }
+    .navbar .nav-links > li > a:hover { color: #e8d5bc !important; }
+    .navbar .nav-links > li > a.active { color: #e8d5bc !important; }
+
+    .logo, .footer-logo-link {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+    .logo:hover, .footer-logo-link:hover { transform: scale(1.03); }
+    .logo-icon {
+      width: 42px; height: 42px;
+      flex-shrink: 0;
+      transition: transform 0.4s ease;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+    }
+    .logo:hover .logo-icon { transform: rotate(-6deg); }
+    .logo-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    }
+    .logo-text span { font-weight: 300; letter-spacing: -0.5px; }
+
+    .nav-links {
+      display: flex; flex-wrap: wrap;
+      gap: 1.2rem;
+      align-items: center;
+      list-style: none;
+      font-weight: 500;
+    }
+    .nav-links > li > a {
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .dropdown { position: relative; cursor: pointer; }
+    .dropdown > a { display: flex; align-items: center; gap: 4px; }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background: #ffffff;
+      min-width: 160px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      padding: 0.6rem 0;
+      top: 1.8rem;
+      left: -10px;
+      z-index: 10;
+      border: 1px solid #e8e0d4;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    [data-theme="dark"] .dropdown-content { background: #2b241d; border: 1px solid #3d3226; }
+    [dir="rtl"] .dropdown-content { left: auto; right: -10px; }
+    .dropdown-content.show { display: block; opacity: 1; transform: translateY(0); }
+    .dropdown-content a {
+      display: block;
+      padding: 0.6rem 1.5rem;
+      color: #3a2e26 !important;
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    [data-theme="dark"] .dropdown-content a { color: #f0e9df !important; }
+    .dropdown-content a:hover { background: #f7f3ec; color: #7c5c3e !important; }
+    [data-theme="dark"] .dropdown-content a:hover { background: #1c1814; color: #a8836a !important; }
+    .dropdown-content a.active-drop { color: #7c5c3e !important; background: #f5efe6; font-weight: 700; }
+    [data-theme="dark"] .dropdown-content a.active-drop { color: #a8836a !important; background: #2a211a; }
+
+    .nav-controls { display: flex; align-items: center; gap: 0.7rem; }
+    .nav-controls .toggle-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1.5px solid rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: #ffffff;
+      font-size: 0.72rem; font-weight: 700;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    .nav-controls .toggle-btn i { color: #ffffff; font-size: 0.95rem; }
+    .nav-controls .toggle-btn:hover { background: rgba(255, 255, 255, 0.3); border-color: #ffffff; transform: translateY(-1px); }
+    [data-theme="dark"] .nav-controls .toggle-btn { background: rgba(255, 255, 255, 0.08); border: 1.5px solid rgba(255, 255, 255, 0.3); color: #f0e9df; }
+    [data-theme="dark"] .nav-controls .toggle-btn i { color: #f0e9df; }
+    [data-theme="dark"] .nav-controls .toggle-btn:hover { border-color: #a8836a; color: #a8836a; background: rgba(168, 131, 106, 0.1); }
+    [data-theme="dark"] .nav-controls .toggle-btn:hover i { color: #a8836a; }
+
+    .nav-controls .inspect-btn {
+      background: #ffffff;
+      color: #7c5c3e;
+      border: none;
+      padding: 0.65rem 1.5rem;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.25s;
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+    .nav-controls .inspect-btn i { color: #7c5c3e; }
+    .nav-controls .inspect-btn:hover { background: #f5efe6; transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35); }
+    [data-theme="dark"] .nav-controls .inspect-btn { background: var(--accent); color: #fff; box-shadow: 0 4px 12px rgba(124, 92, 62, 0.5); }
+    [data-theme="dark"] .nav-controls .inspect-btn i { color: #fff; }
+    [data-theme="dark"] .nav-controls .inspect-btn:hover { background: var(--accent-dark); box-shadow: 0 8px 20px rgba(124, 92, 62, 0.7); }
+
+      /* ===== 1. HERO WITH FULL-WIDTH IMAGE ===== */
+    .products-hero {
+      position: relative;
+      width: 100%;
+      min-height: 520px;
+      padding: 3.5rem 0 4rem;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: #3a2e26;
+    }
+    .products-hero .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      z-index: 0;
+      display: block;
+    }
+    .products-hero .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(30, 20, 12, 0.55) 0%,
+        rgba(30, 20, 12, 0.25) 50%,
+        rgba(30, 20, 12, 0.55) 100%
+      );
+      z-index: 1;
+    }
+    .products-hero .container {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+    }
+    .products-hero .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      padding: 0.4rem 1.1rem;
+      border-radius: 60px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      margin-bottom: 1rem;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    }
+    .products-hero .hero-tag i { color: #f0d5b8; }
+    .products-hero h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.03em;
+      line-height: 1.14;
+      margin-bottom: 0.85rem;
+      text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.75),
+        0 4px 18px rgba(0, 0, 0, 0.55);
+    }
+    .products-hero h1 span { color: #f0d5b8; }
+    .products-hero p {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.98);
+      line-height: 1.7;
+      max-width: 600px;
+      margin: 0 auto 1.6rem;
+      text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.75),
+        0 2px 12px rgba(0, 0, 0, 0.5);
+    }
+    .products-hero .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #ffffff;
+      color: var(--accent-dark);
+      padding: 0.85rem 2rem;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      text-decoration: none;
+      transition: 0.25s ease;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      border: none;
+      cursor: pointer;
+    }
+    .products-hero .hero-cta i { color: var(--accent); font-size: 0.95rem; }
+    .products-hero .hero-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+      background: #f5efe6;
+    }
+
+    @media (max-width: 1024px) {
+      .products-hero { min-height: 460px; padding: 3rem 0 3.5rem; }
+      .products-hero h1 { font-size: 2.2rem; }
+    }
+    @media (max-width: 767px) {
+      .products-hero { min-height: 400px; padding: 2.5rem 0 3rem; }
+      .products-hero h1 { font-size: 1.75rem; }
+      .products-hero p { font-size: 0.88rem; margin-bottom: 1.3rem; }
+      .products-hero .hero-tag { font-size: 0.66rem; padding: 0.32rem 0.9rem; margin-bottom: 0.8rem; }
+      .products-hero .hero-cta { padding: 0.75rem 1.7rem; font-size: 0.85rem; }
+    }
+    @media (max-width: 480px) {
+      .products-hero { min-height: 340px; padding: 2rem 0 2.5rem; }
+      .products-hero h1 { font-size: 1.4rem; }
+      .products-hero p { font-size: 0.8rem; margin-bottom: 1.1rem; }
+      .products-hero .hero-cta { padding: 0.65rem 1.4rem; font-size: 0.78rem; gap: 8px; }
+      .products-hero .hero-cta i { font-size: 0.82rem; }
+    }
+    @media (max-width: 380px) {
+      .products-hero { min-height: 300px; padding: 1.6rem 0 2rem; }
+      .products-hero h1 { font-size: 1.2rem; }
+      .products-hero p { font-size: 0.72rem; }
+      .products-hero .hero-cta { padding: 0.55rem 1.2rem; font-size: 0.72rem; }
+    }
+
+    /* ===== 2. FILTER TABS (BELOW HERO) ===== */
+    .filter-section {
+      background: var(--bg-primary);
+      padding: 1.6rem 0;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 70px;
+      z-index: 50;
+      transition: background var(--transition), border-color var(--transition);
+    }
+    .filter-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.55rem;
+    }
+    .filter-btn {
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1.3rem;
+      border-radius: 60px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .filter-btn i { font-size: 0.85rem; }
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .filter-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 6px 16px rgba(124, 92, 62, 0.3);
+    }
+    .filter-btn.active i { color: #fff; }
+
+    /* ===== PRODUCTS SECTION ===== */
+    .products-section {
+      background: var(--bg-primary);
+      padding: 3rem 0 4rem;
+      transition: background var(--transition);
+    }
+    .category-block {
+      margin-bottom: 3.5rem;
+      scroll-margin-top: 140px;
+    }
+    .category-block:last-child { margin-bottom: 0; }
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 1.8rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 2px solid var(--border-color);
+      position: relative;
+    }
+    .category-header::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 80px;
+      height: 2px;
+      background: var(--accent);
+    }
+    [dir="rtl"] .category-header::after { left: auto; right: 0; }
+    .category-icon {
+      width: 50px; height: 50px;
+      border-radius: 14px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .category-header-text h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .category-header-text p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 0.15rem;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.6rem;
+    }
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 22px;
+      overflow: hidden;
+      transition: 0.35s ease;
+      box-shadow: 0 4px 16px var(--shadow);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px var(--shadow);
+      border-color: var(--accent);
+    }
+    .product-img {
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      background: #f5efe6;
+      position: relative;
+    }
+    .product-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .product-card:hover .product-img img { transform: scale(1.06); }
+    .product-tag {
+      position: absolute;
+      top: 12px; left: 12px;
+      background: rgba(124, 92, 62, 0.94);
+      color: #fff;
+      padding: 0.28rem 0.75rem;
+      border-radius: 60px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      backdrop-filter: blur(6px);
+      z-index: 2;
+    }
+    [dir="rtl"] .product-tag { left: auto; right: 12px; }
+    .product-tag.new { background: rgba(106, 143, 90, 0.94); }
+    .product-tag.limited { background: rgba(180, 74, 74, 0.94); }
+    .product-body {
+      padding: 1.2rem 1.2rem 1.3rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-body .product-meta {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.35rem;
+    }
+    [data-theme="dark"] .product-body .product-meta { color: var(--accent-light); }
+    .product-body h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.35rem;
+      line-height: 1.3;
+    }
+    .product-body p {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      flex: 1;
+      margin-bottom: 0.9rem;
+    }
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 0.9rem;
+      border-top: 1px dashed var(--border-color);
+      gap: 0.5rem;
+    }
+    .product-footer .price {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--accent-dark);
+    }
+    [data-theme="dark"] .product-footer .price { color: var(--accent-light); }
+    .product-footer .shop-link {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.78rem;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: 0.2s;
+      text-decoration: none;
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 60px;
+      background: var(--bg-secondary);
+    }
+    .product-footer .shop-link:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .product-card:hover .product-footer .shop-link i { transform: translateX(3px); }
+    [dir="rtl"] .product-card:hover .product-footer .shop-link i { transform: translateX(-3px); }
+
+    .category-block.hidden { display: none; }
+
+    /* ===== CTA ===== */
+    .cta-wrap { padding: 0 1.5rem 2rem; }
+    .cta-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      border-radius: 32px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -20%;
+      width: 400px; height: 400px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+    }
+    .cta-section::after {
+      content: '';
+      position: absolute;
+      bottom: -60%; left: -15%;
+      width: 380px; height: 380px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 50%;
+    }
+    .cta-section h2 { color: #fff; font-size: 2.1rem; font-weight: 700; margin-bottom: 0.5rem; position: relative; z-index: 1; }
+    .cta-section p { color: rgba(255, 255, 255, 0.85); max-width: 560px; margin: 0 auto 1.8rem; font-size: 1rem; position: relative; z-index: 1; }
+    .cta-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; position: relative; z-index: 1; }
+    .cta-btn-primary {
+      background: #fff; color: var(--accent);
+      border: none; padding: 0.9rem 2.5rem;
+      border-radius: 60px;
+      font-weight: 700; font-size: 0.95rem;
+      cursor: pointer; transition: 0.25s;
+      display: inline-flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .cta-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); }
+    .cta-btn-secondary {
+      background: transparent; color: #fff;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      padding: 0.85rem 2.2rem;
+      border-radius: 60px;
+      font-weight: 600; font-size: 0.95rem;
+      cursor: pointer; transition: 0.25s;
+      display: inline-flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .cta-btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
+
+    /* ===== HAMBURGER & MOBILE NAV ===== */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 10px 12px;
+      border-radius: 8px;
+      z-index: 1001;
+      flex-shrink: 0;
+      position: fixed;
+      top: 15px; right: 15px;
+      background: var(--accent);
+      border: 1px solid var(--accent-dark);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    [data-theme="dark"] .hamburger { background: #1c1814; border: 1px solid #2b241d; }
+    .hamburger span { display: block; width: 26px; height: 3px; background: #ffffff; border-radius: 3px; transition: all 0.3s ease; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+    [dir="rtl"] .hamburger { right: auto; left: 15px; }
+
+    .mobile-nav-drawer {
+      position: fixed;
+      top: 0; right: -100%;
+      width: min(300px, 85vw);
+      height: 100vh;
+      background: var(--bg-primary);
+      border-left: 2px solid var(--accent);
+      z-index: 1000;
+      transition: right 0.3s ease;
+      overflow-y: auto;
+      box-shadow: -10px 0 30px var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+    [dir="rtl"] .mobile-nav-drawer { right: auto; left: -100%; border-left: none; border-right: 2px solid var(--accent); }
+    .mobile-nav-drawer.active { right: 0; }
+    [dir="rtl"] .mobile-nav-drawer.active { left: 0; right: auto; }
+
+    .drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 20px 14px 20px;
+      border-bottom: 1px solid var(--border-color);
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #7c5c3e, #5a3f2a);
+    }
+    [data-theme="dark"] .drawer-header { background: #1c1814; }
+    .drawer-header .logo-text { color: #ffffff !important; }
+    .drawer-header .logo-text span { color: #ffffff !important; opacity: 0.7; }
+    .close-drawer {
+      background: none; border: none; color: #ffffff;
+      font-size: 24px; cursor: pointer;
+      padding: 4px 8px; transition: 0.2s;
+      display: flex; align-items: center; justify-content: center; line-height: 1;
+    }
+    .close-drawer:hover { color: #e8d5bc; transform: rotate(90deg); }
+
+    .mobile-nav-drawer ul {
+      list-style: none; margin: 0; padding: 16px 20px 40px 20px;
+      display: flex; flex-direction: column; gap: 4px; flex: 1;
+    }
+    .mobile-nav-drawer ul li { width: 100%; }
+    .mobile-nav-drawer ul li a {
+      color: var(--text-primary); text-decoration: none;
+      font-size: 15px; font-weight: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px; border-radius: 8px;
+      transition: 0.2s; width: 100%; opacity: 0.8;
+    }
+    .mobile-nav-drawer ul li a:hover, .mobile-nav-drawer ul li a.active {
+      color: var(--accent); background: var(--bg-secondary); opacity: 1;
+    }
+    .mobile-cta {
+      margin-top: 12px; border-top: 1px solid var(--border-color);
+      padding-top: 14px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .mobile-cta .mobile-inspect-btn {
+      width: 100%; text-align: center; justify-content: center;
+      padding: 12px 16px; border-radius: 25px;
+      text-decoration: none; font-weight: 600; font-size: 14px;
+      display: flex; align-items: center; gap: 8px;
+      background: var(--accent); color: #fff; transition: 0.25s;
+    }
+    .mobile-cta .mobile-inspect-btn:hover { background: var(--accent-dark); transform: translateY(-2px); }
+
+    .mobile-actions { margin-top: 8px; gap: 8px; width: 100%; display: flex; flex-wrap: wrap; }
+    .mobile-actions button {
+      border-radius: 25px; padding: 8px 14px; flex: 1;
+      font-size: 13px; gap: 6px; min-width: 80px; height: 38px;
+      background: var(--bg-secondary); border: 1px solid var(--border-color);
+      color: var(--text-primary); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: 0.3s; font-weight: 500;
+    }
+    .mobile-actions button:hover { border-color: var(--accent); background: var(--accent-soft); }
+    .mobile-actions button i { font-size: 14px; }
+
+    .nav-overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); z-index: 999; }
+    .nav-overlay.active { display: block; }
+    body.menu-open { overflow: hidden !important; position: fixed !important; width: 100% !important; top: 0; left: 0; right: 0; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .nav-links { display: none !important; }
+      .nav-controls { display: none !important; }
+      .hamburger { display: flex !important; }
+      .filter-section { top: 62px; }
+      .products-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 992px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1.3rem; }
+      .category-header-text h2 { font-size: 1.3rem; }
+    }
+    @media (max-width: 767px) {
+      .filter-section { padding: 1.2rem 0; top: 58px; }
+      .filter-btn { padding: 0.5rem 1rem; font-size: 0.78rem; gap: 6px; }
+      .filter-btn i { font-size: 0.78rem; }
+      .products-section { padding: 2rem 0 3rem; }
+      .category-block { margin-bottom: 2.5rem; scroll-margin-top: 120px; }
+      .category-header { gap: 11px; margin-bottom: 1.3rem; padding-bottom: 0.7rem; }
+      .category-icon { width: 42px; height: 42px; font-size: 1.1rem; border-radius: 12px; }
+      .category-header-text h2 { font-size: 1.15rem; }
+      .category-header-text p { font-size: 0.78rem; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .product-img { height: 180px; }
+      .product-body { padding: 1rem 0.9rem 1.1rem; }
+      .product-body h3 { font-size: 0.92rem; }
+      .product-body p { font-size: 0.75rem; }
+      .product-footer .price { font-size: 0.95rem; }
+      .product-footer .shop-link { font-size: 0.72rem; padding: 0.3rem 0.65rem; }
+      .cta-section { padding: 2rem 1.2rem; }
+      .cta-section h2 { font-size: 1.5rem; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+      .cta-btn-primary, .cta-btn-secondary { width: 100%; max-width: 280px; justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .filter-btn { padding: 0.4rem 0.85rem; font-size: 0.72rem; gap: 5px; }
+      .filter-btn i { font-size: 0.72rem; }
+      .products-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .product-img { height: 200px; }
+      .product-body h3 { font-size: 0.95rem; }
+      .product-body p { font-size: 0.78rem; }
+      .category-icon { width: 38px; height: 38px; font-size: 1rem; }
+      .category-header-text h2 { font-size: 1.05rem; }
+      .cta-section { padding: 1.5rem 1rem; border-radius: 20px; }
+      .cta-section h2 { font-size: 1.25rem; }
+      .cta-btn-primary, .cta-btn-secondary { padding: 0.6rem 1.5rem; font-size: 0.8rem; max-width: 100%; }
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #3a2e26;
+      color: #b5a695;
+      padding: 3rem 0 1.5rem;
+      margin-top: 0;
+    }
+    [data-theme="dark"] footer { background: #100d0a; }
+    .footer-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2.5rem;
+      margin-bottom: 2rem;
+    }
+    .footer-box { display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-box p { display: flex; align-items: center; gap: 10px; }
+    .footer-box p i { width: 20px; color: var(--accent-light); text-align: center; flex-shrink: 0; }
+    .footer-box .footer-logo-link {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+      margin-bottom: 0.3rem;
+      transition: transform 0.3s ease;
+    }
+    .footer-box .footer-logo-link:hover { transform: scale(1.03); }
+    .footer-box .footer-logo-link .logo-icon { width: 42px; height: 42px; flex-shrink: 0; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25)); }
+    .footer-box .footer-logo-link .logo-text { font-size: 1.75rem; font-weight: 800; letter-spacing: -1px; color: #ffffff !important; line-height: 1; }
+    .footer-box .footer-logo-link .logo-text span { color: #ffffff; font-weight: 300; letter-spacing: -0.5px; opacity: 0.7; }
+    .footer-box p { font-size: 0.9rem; color: #b5a695; line-height: 1.8; }
+    .footer-box h2 { font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 0.3rem; letter-spacing: 0.5px; }
+    .footer-box a { color: #b5a695; text-decoration: none; font-size: 0.9rem; transition: 0.2s; display: block; line-height: 1.8; }
+    .footer-box a:hover { color: var(--accent-light); padding-left: 4px; }
+    [dir="rtl"] .footer-box a:hover { padding-left: 0; padding-right: 4px; }
+    .social { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+    .social a {
+      background: rgba(255, 255, 255, 0.06);
+      color: #b5a695;
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      transition: 0.3s ease;
+      text-decoration: none;
+    }
+    .social a:hover { background: var(--accent); color: #fff; transform: translateY(-3px); }
+    .social a.x-icon { font-size: 0; }
+    .social a.x-icon svg { width: 16px; height: 16px; fill: currentColor; }
+    .social a.x-icon:hover svg { fill: #fff; }
+    footer hr { max-width: 1280px; margin: 0 auto; border: none; border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 0 1.5rem; }
+    footer .copy { max-width: 1280px; margin: 1.2rem auto 0; padding: 0 1.5rem; text-align: center; font-size: 0.85rem; color: #7a6a5c; }
+    footer .copy span { color: var(--accent-light); }
+
+    @media (max-width: 1024px) and (min-width: 768px) {
+      .footer-container { grid-template-columns: 1fr 1fr; gap: 2rem; text-align: left; }
+      .footer-box:first-child { grid-column: 1 / 2; text-align: left !important; align-items: flex-start !important; }
+      .footer-box:first-child .footer-logo-link { justify-content: flex-start !important; }
+      .footer-box:first-child p { text-align: left !important; max-width: 400px; }
+      .footer-box:nth-child(2) { grid-column: 2 / 3; text-align: left !important; align-items: flex-start !important; }
+      .footer-box:nth-child(2) h2, .footer-box:nth-child(2) a { text-align: left !important; }
+      .footer-box:nth-child(3) { grid-column: 1 / 2; grid-row: 2; text-align: left !important; align-items: flex-start !important; }
+      .footer-box:nth-child(3) h2, .footer-box:nth-child(3) p { text-align: left !important; }
+      .footer-box:nth-child(4) { grid-column: 2 / 3; grid-row: 2; text-align: left !important; align-items: flex-start !important; }
+      .footer-box:nth-child(4) h2 { text-align: left !important; }
+      .footer-box:nth-child(4) .social { justify-content: flex-start !important; }
+      footer .copy { text-align: center !important; }
+    }
+    @media (max-width: 767px) {
+      footer { padding: 2rem 0 1rem; }
+      .footer-container { grid-template-columns: 1fr; gap: 1.5rem; text-align: left !important; padding: 0 1.5rem; }
+      .footer-box { text-align: left !important; align-items: flex-start !important; }
+      .footer-box .footer-logo-link { justify-content: flex-start !important; }
+      .footer-box .footer-logo-link .logo-icon { width: 34px; height: 34px; }
+      .footer-box .footer-logo-link .logo-text { font-size: 1.4rem !important; }
+      .footer-box p { text-align: left !important; font-size: 0.85rem; max-width: 100%; }
+      .footer-box h2 { text-align: left !important; font-size: 1rem; margin-bottom: 0.2rem; }
+      .footer-box a { text-align: left !important; font-size: 0.85rem; }
+      .footer-box .social { justify-content: flex-start !important; }
+      .social a { width: 34px; height: 34px; font-size: 0.85rem; }
+      .social a.x-icon svg { width: 14px; height: 14px; }
+      footer .copy { text-align: center !important; font-size: 0.75rem; padding: 0 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      footer { padding: 1.5rem 0 1rem; }
+      .footer-container { gap: 1.2rem; padding: 0 1.2rem; }
+      .footer-box .footer-logo-link .logo-icon { width: 28px; height: 28px; }
+      .footer-box .footer-logo-link .logo-text { font-size: 1.2rem !important; }
+      .footer-box p { font-size: 0.8rem; }
+      .footer-box h2 { font-size: 0.9rem; }
+      .footer-box a { font-size: 0.8rem; }
+      .social a { width: 30px; height: 30px; font-size: 0.75rem; }
+      .social a.x-icon svg { width: 12px; height: 12px; }
+      footer .copy { font-size: 0.65rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <div class="container" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; width:100%; padding:0;">
+      <a href="index.html" class="logo">
+        <svg class="logo-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="logoRing" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#a8836a"/>
+              <stop offset="100%" stop-color="#7c5c3e"/>
+            </linearGradient>
+            <linearGradient id="logoPot" x1="50%" y1="100%" x2="50%" y2="0%">
+              <stop offset="0%" stop-color="#5a3f2a"/>
+              <stop offset="55%" stop-color="#7c5c3e"/>
+              <stop offset="100%" stop-color="#a8836a"/>
+            </linearGradient>
+          </defs>
+          <circle cx="24" cy="24" r="21" fill="url(#logoRing)"/>
+          <circle cx="24" cy="24" r="17.5" fill="#f5efe6"/>
+          <path d="M16 20 L32 20 L30 30 Q24 34 18 30 Z" fill="url(#logoPot)"/>
+          <ellipse cx="24" cy="20" rx="8" ry="2.2" fill="#5a3f2a"/>
+          <circle cx="24" cy="25.5" r="2.2" fill="#f5efe6" opacity="0.85"/>
+          <circle cx="16" cy="16" r="1.4" fill="#7c5c3e"/>
+          <circle cx="32" cy="16" r="1.4" fill="#7c5c3e"/>
+        </svg>
+        <span class="logo-text">Craft<span>Nest</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li class="dropdown" id="homeDropdown">
+          <a href="#" onclick="toggleDropdown(event, 'dropdownHome')">Home <i class="fas fa-chevron-down" style="font-size:0.6rem;"></i></a>
+          <div class="dropdown-content" id="dropdownHome">
+            <a href="index.html">Home 1</a>
+            <a href="home2.html">Home 2</a>
+          </div>
+        </li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="products.html" class="active">Products</a></li>
+         <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="artisans.html">Artisan Stories</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <div class="nav-controls">
+        <button class="toggle-btn" onclick="toggleRTL()" id="rtlBtn">RTL</button>
+        <button class="toggle-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode" id="themeToggle">
+          <i class="fas fa-moon"></i>
+        </button>
+        <a href="products.html" class="inspect-btn">
+          <i class="fas fa-shopping-bag"></i> Shop Collection
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HAMBURGER ===== -->
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- ===== MOBILE NAV DRAWER ===== -->
+  <div class="mobile-nav-drawer" id="mobileNav">
+    <div class="drawer-header">
+      <a href="index.html" class="logo">
+        <svg class="logo-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="logoRingM" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#a8836a"/>
+              <stop offset="100%" stop-color="#7c5c3e"/>
+            </linearGradient>
+            <linearGradient id="logoPotM" x1="50%" y1="100%" x2="50%" y2="0%">
+              <stop offset="0%" stop-color="#5a3f2a"/>
+              <stop offset="55%" stop-color="#7c5c3e"/>
+              <stop offset="100%" stop-color="#a8836a"/>
+            </linearGradient>
+          </defs>
+          <circle cx="24" cy="24" r="21" fill="url(#logoRingM)"/>
+          <circle cx="24" cy="24" r="17.5" fill="#f5efe6"/>
+          <path d="M16 20 L32 20 L30 30 Q24 34 18 30 Z" fill="url(#logoPotM)"/>
+          <ellipse cx="24" cy="20" rx="8" ry="2.2" fill="#5a3f2a"/>
+          <circle cx="24" cy="25.5" r="2.2" fill="#f5efe6" opacity="0.85"/>
+          <circle cx="16" cy="16" r="1.4" fill="#7c5c3e"/>
+          <circle cx="32" cy="16" r="1.4" fill="#7c5c3e"/>
+        </svg>
+        <span class="logo-text">Craft<span>Nest</span></span>
+      </a>
+      <button class="close-drawer" onclick="closeMenu()">✕</button>
+    </div>
+    <ul>
+      <li><a href="index.html">Home 1</a></li>
+      <li><a href="home2.html">Home 2</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="products.html" class="active">Products</a></li>
+       <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="artisans.html">Artisan Stories</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li class="mobile-cta">
+        <a href="products.html" class="mobile-inspect-btn">
+          <i class="fas fa-shopping-bag"></i> Shop Collection
+        </a>
+      </li>
+      <li class="mobile-actions">
+        <button onclick="toggleMobileRTL()" id="mobileRtlBtn">
+          <i class="fas fa-exchange-alt"></i> <span id="mobileRtlLabel">RTL</span>
+        </button>
+        <button onclick="toggleMobileTheme()" id="mobileThemeBtn">
+          <i class="fas fa-moon" id="mobileThemeIcon"></i> <span id="mobileThemeLabel">Dark</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="nav-overlay" id="navOverlay" onclick="closeMenu()"></div>
+
+  <!-- ===== 1. HERO WITH IMAGE (SHARPER) ===== -->
+  <section class="products-hero">
+    <img src="images/hero 4.jpg" alt="Handmade products" class="hero-bg-img">
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <span class="hero-tag">
+        <i class="fas fa-hands"></i> 100% Handmade · Made To Order
+      </span>
+      <h1>Shop Our <span>Handmade Collections</span></h1>
+      <p>Every piece is shaped by hand — no two alike. Browse by category and bring home a story worth telling.</p>
+      <a href="#pottery" class="hero-cta">
+        <i class="fas fa-shopping-bag"></i> View Products
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== 2. FILTER TABS (BELOW HERO) ===== -->
+  <section class="filter-section">
+    <div class="container">
+      <div class="filter-inner" id="filterTabs">
+        <button class="filter-btn active" data-target="all"><i class="fas fa-th-large"></i> All Products</button>
+        <button class="filter-btn" data-target="pottery"><i class="fas fa-mug-hot"></i> Pottery & Ceramics</button>
+        <button class="filter-btn" data-target="woodwork"><i class="fas fa-tree"></i> Wooden Crafts</button>
+        <button class="filter-btn" data-target="textiles"><i class="fas fa-rug"></i> Textiles & Rugs</button>
+        <button class="filter-btn" data-target="wallart"><i class="fas fa-palette"></i> Wall Art</button>
+        <button class="filter-btn" data-target="lighting"><i class="fas fa-lightbulb"></i> Lighting</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRODUCTS BY CATEGORY ===== -->
+  <section class="products-section">
+    <div class="container">
+
+      <!-- ===== CATEGORY 1: POTTERY & CERAMICS ===== -->
+      <div class="category-block" id="pottery" data-category="pottery">
+        <div class="category-header">
+          <div class="category-icon"><i class="fas fa-mug-hot"></i></div>
+          <div class="category-header-text">
+            <h2>Pottery & Ceramics</h2>
+            <p>Hand-thrown on traditional wheels · Fired in wood kilns</p>
+          </div>
+        </div>
+        <div class="products-grid">
+
+          <div class="product-card">
+            <div class="product-img">
+              <span class="product-tag">Bestseller</span>
+              <img src="images/pottery 1.jpg" alt="Terracotta Vase">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Pottery</div>
+              <h3>Rustic Terracotta Vase</h3>
+              <p>Hand-thrown vase with a matte glaze. Perfect for dried blooms or as a standalone piece.</p>
+              <div class="product-footer">
+                <span class="price">$48</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img">
+              <span class="product-tag new">New</span>
+              <img src="images/pottery 2.jpg" alt="Ceramic Mug Set">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Pottery</div>
+              <h3>Speckled Ceramic Mug Set</h3>
+              <p>Set of two hand-glazed stoneware mugs. Dishwasher safe and made for daily rituals.</p>
+              <div class="product-footer">
+                <span class="price">$52</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img">
+              <img src="images/pottery 3.jpg" alt="Stoneware Bowl">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Pottery</div>
+              <h3>Glazed Stoneware Bowl</h3>
+              <p>Wheel-thrown bowl with a natural earth glaze — ideal for salads, fruit, or display.</p>
+              <div class="product-footer">
+                <span class="price">$42</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img">
+              <span class="product-tag limited">Limited</span>
+              <img src="images/pottery 4.jpg" alt="Decorative Planter">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Pottery</div>
+              <h3>Handmade Ceramic Planter</h3>
+              <p>Speckled planter with drainage hole — perfect for succulents or herbs on a sill.</p>
+              <div class="product-footer">
+                <span class="price">$38</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== CATEGORY 2: WOODEN CRAFTS ===== -->
+      <div class="category-block" id="woodwork" data-category="woodwork">
+        <div class="category-header">
+          <div class="category-icon"><i class="fas fa-tree"></i></div>
+          <div class="category-header-text">
+            <h2>Wooden Crafts</h2>
+            <p>Carved from reclaimed walnut & teak · Finished with natural oils</p>
+          </div>
+        </div>
+        <div class="products-grid">
+
+          <div class="product-card">
+            <div class="product-img">
+              <span class="product-tag">Bestseller</span>
+              <img src="images/wood 1.jpg" alt="Wooden Serving Tray">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Wooden Crafts</div>
+              <h3>Carved Serving Tray</h3>
+              <p>Hand-carved from seasoned walnut, finished with food-safe oil. A timeless kitchen staple.</p>
+              <div class="product-footer">
+                <span class="price">$65</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img">
+              <img src="images/wood 2.jpg" alt="Wooden Bowl">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Wooden Crafts</div>
+              <h3>Turned Wooden Bowl</h3>
+              <p>Hand-turned from reclaimed teak, each bowl carries its own unique grain pattern.</p>
+              <div class="product-footer">
+                <span class="price">$44</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img">
+              <span class="product-tag new">New</span>
+              <img src="images/wood 3.jpg" alt="Wooden Coasters">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Wooden Crafts</div>
+              <h3>Set of 6 Wood Coasters</h3>
+              <p>Hand-cut from walnut off-cuts, polished smooth. Each coaster is one-of-a-kind.</p>
+              <div class="product-footer">
+                <span class="price">$28</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img">
+              <img src="images/wood 4.jpg" alt="Wooden Cutting Board">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Wooden Crafts</div>
+              <h3>Rustic Cutting Board</h3>
+              <p>Chunky end-grain board for slicing, serving, or as a decorative kitchen centrepiece.</p>
+              <div class="product-footer">
+                <span class="price">$58</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== CATEGORY 3: TEXTILES & RUGS ===== -->
+      <div class="category-block" id="textiles" data-category="textiles">
+        <div class="category-header">
+          <div class="category-icon"><i class="fas fa-scroll"></i></div>
+          <div class="category-header-text">
+            <h2>Textiles & Rugs</h2>
+            <p>Handwoven on wooden looms · Naturally dyed with plant pigments</p>
+          </div>
+        </div>
+        <div class="products-grid">
+
+          <div class="product-card">
+            <div class="product-img">
+              <span class="product-tag">Bestseller</span>
+              <img src="images/textile 1.jpg" alt="Handwoven Rug">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Textiles</div>
+              <h3>Handwoven Wool Rug</h3>
+              <p>Woven on a wooden loom by master weavers. Natural dyes, earthy tones, built to last.</p>
+              <div class="product-footer">
+                <span class="price">$189</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img">
+              <img src="images/textile 2.jpg" alt="Woven Cushion">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Textiles</div>
+              <h3>Handwoven Cushion Cover</h3>
+              <p>Naturally dyed cotton on a traditional loom. Adds warmth and texture to any sofa.</p>
+              <div class="product-footer">
+                <span class="price">$36</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img">
+              <span class="product-tag limited">Limited</span>
+              <img src="images/textile 3.jpg" alt="Woven Throw">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Textiles</div>
+              <h3>Handwoven Cotton Throw</h3>
+              <p>Soft, breathable throw woven in earthy stripes. Perfect for reading nooks and sofas.</p>
+              <div class="product-footer">
+                <span class="price">$78</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img">
+              <img src="images/textile 4.jpg" alt="Table Runner">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Textiles</div>
+              <h3>Woven Table Runner</h3>
+              <p>Handwoven cotton runner with natural fringe. Elevates any dining table setting.</p>
+              <div class="product-footer">
+                <span class="price">$32</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== CATEGORY 4: WALL ART & DECOR ===== -->
+      <div class="category-block" id="wallart" data-category="wallart">
+        <div class="category-header">
+          <div class="category-icon"><i class="fas fa-palette"></i></div>
+          <div class="category-header-text">
+            <h2>Wall Art & Decor</h2>
+            <p>Hand-painted, hand-carved & hand-framed pieces for empty walls</p>
+          </div>
+        </div>
+        <div class="products-grid">
+
+          <div class="product-card">
+            <div class="product-img">
+              <img src="images/wall 1.jpg" alt="Framed Wall Art">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Wall Art</div>
+              <h3>Hand-Painted Canvas Art</h3>
+              <p>Original artwork inspired by rural life, painted with natural pigments on cotton canvas.</p>
+              <div class="product-footer">
+                <span class="price">$124</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img">
+              <span class="product-tag new">New</span>
+              <img src="images/wall 2.jpg" alt="Wooden Wall Decor">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Wall Art</div>
+              <h3>Carved Wood Wall Panel</h3>
+              <p>Intricately hand-carved wooden panel — bring texture and warmth to a plain wall.</p>
+              <div class="product-footer">
+                <span class="price">$94</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img">
+              <img src="images/wall 3.jpg" alt="Woven Wall Hanging">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Wall Art</div>
+              <h3>Woven Wall Hanging</h3>
+              <p>Textured macramé-style wall hanging made from natural cotton and jute fibres.</p>
+              <div class="product-footer">
+                <span class="price">$56</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img">
+              <span class="product-tag limited">Limited</span>
+              <img src="images/wall 4.jpg" alt="Brass Wall Mirror">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Wall Art</div>
+              <h3>Handcrafted Brass Mirror</h3>
+              <p>Hand-embossed brass frame around an antique-finish mirror. A statement piece.</p>
+              <div class="product-footer">
+                <span class="price">$148</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== CATEGORY 5: LIGHTING ===== -->
+      <div class="category-block" id="lighting" data-category="lighting">
+        <div class="category-header">
+          <div class="category-icon"><i class="fas fa-lightbulb"></i></div>
+          <div class="category-header-text">
+            <h2>Lighting</h2>
+            <p>Warm light through wood, clay & natural fibres — made for cosy evenings</p>
+          </div>
+        </div>
+        <div class="products-grid">
+
+          <div class="product-card">
+            <div class="product-img">
+              <span class="product-tag">Bestseller</span>
+              <img src="images/light 1.jpg" alt="Wooden Table Lamp">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Lighting</div>
+              <h3>Carved Wood Table Lamp</h3>
+              <p>Hand-turned teak base with a linen shade. Warm, natural light for bedside or desk.</p>
+              <div class="product-footer">
+                <span class="price">$128</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img">
+              <img src="images/light 2.jpg" alt="Ceramic Pendant Light">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Lighting</div>
+              <h3>Ceramic Pendant Lamp</h3>
+              <p>Hand-thrown clay shade that filters light into a warm, soft glow. Hangs beautifully.</p>
+              <div class="product-footer">
+                <span class="price">$96</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img">
+              <span class="product-tag new">New</span>
+              <img src="images/light 3.jpg" alt="Woven Rattan Lamp">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Lighting</div>
+              <h3>Woven Rattan Floor Lamp</h3>
+              <p>Rattan shade woven by hand — casts beautiful shadows and warms up any corner.</p>
+              <div class="product-footer">
+                <span class="price">$164</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img">
+              <img src="images/light 4.jpg" alt="Brass Tea Light Holder">
+            </div>
+            <div class="product-body">
+              <div class="product-meta">Lighting</div>
+              <h3>Brass Tea Light Holder</h3>
+              <p>Hand-hammered brass holder for tea lights — adds a warm shimmer to tables.</p>
+              <div class="product-footer">
+                <span class="price">$34</span>
+                <a href="#" class="shop-link">Shop <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <div class="cta-wrap">
+    <div class="cta-section">
+      <h2>Can't Find What You're Looking For?</h2>
+      <p>We take custom orders — tell us what you'd love and our artisans will craft it for you, made to order, delivered with a story.</p>
+      <div class="cta-buttons">
+        <a href="contact.html" class="cta-btn-primary">
+          <i class="fas fa-pencil-ruler"></i> Request Custom Order
+        </a>
+        <a href="artisans.html" class="cta-btn-secondary">
+          <i class="fas fa-users"></i> Meet The Makers
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-box">
+        <a href="index.html" class="footer-logo-link" onclick="scrollToTop()">
+          <svg class="logo-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="logoRingF" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#a8836a"/>
+                <stop offset="100%" stop-color="#7c5c3e"/>
+              </linearGradient>
+              <linearGradient id="logoPotF" x1="50%" y1="100%" x2="50%" y2="0%">
+                <stop offset="0%" stop-color="#5a3f2a"/>
+                <stop offset="55%" stop-color="#7c5c3e"/>
+                <stop offset="100%" stop-color="#a8836a"/>
+              </linearGradient>
+            </defs>
+            <circle cx="24" cy="24" r="21" fill="url(#logoRingF)"/>
+            <circle cx="24" cy="24" r="17.5" fill="#f5efe6"/>
+            <path d="M16 20 L32 20 L30 30 Q24 34 18 30 Z" fill="url(#logoPotF)"/>
+            <ellipse cx="24" cy="20" rx="8" ry="2.2" fill="#5a3f2a"/>
+            <circle cx="24" cy="25.5" r="2.2" fill="#f5efe6" opacity="0.85"/>
+            <circle cx="16" cy="16" r="1.4" fill="#7c5c3e"/>
+            <circle cx="32" cy="16" r="1.4" fill="#7c5c3e"/>
+          </svg>
+          <span class="logo-text">Craft<span>Nest</span></span>
+        </a>
+        <p>CraftNest — handcrafted pottery, woodwork, and textiles made by skilled artisans and delivered with love to homes worldwide.</p>
+      </div>
+      <div class="footer-box">
+        <h2>Quick Links</h2>
+        <a href="index.html">Home</a>
+         <a href="about.html">About</a>
+        <a href="products.html">Products</a>
+        <a href="artisans.html">Artisan Stories</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-box">
+        <h2>Contact</h2>
+        <p><i class="fas fa-map-marker-alt"></i> 42 Artisan Row, London</p>
+        <p><i class="fas fa-phone"></i> +44 20 7946 0958</p>
+        <p><i class="fas fa-envelope"></i> hello@craftnest.com</p>
+        <p><i class="fas fa-clock"></i> Mon - Sat : 9AM - 7PM</p>
+      </div>
+      <div class="footer-box">
+        <h2>Follow Us</h2>
+        <div class="social">
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+          <a href="#" aria-label="Twitter/X" class="x-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <p class="copy">© 2026 <span>CraftNest</span>. All Rights Reserved. Handmade with heart.</p>
+  </footer>
+
+  <script>
+    // ===== DROPDOWN TOGGLE =====
+    let dropdownOpen = false;
+    function toggleDropdown(e, id) {
+      e.preventDefault(); e.stopPropagation();
+      const content = document.getElementById(id);
+      dropdownOpen = !dropdownOpen;
+      content.classList.toggle('show', dropdownOpen);
+      document.querySelectorAll('.dropdown-content').forEach(dc => {
+        if (dc.id !== id) dc.classList.remove('show');
+      });
+    }
+    document.addEventListener('click', function(e) {
+      const dropdown = document.getElementById('homeDropdown');
+      if (dropdown && !dropdown.contains(e.target)) {
+        document.querySelectorAll('.dropdown-content').forEach(dc => dc.classList.remove('show'));
+        dropdownOpen = false;
+      }
+    });
+
+    // ===== THEME TOGGLE =====
+    function applyTheme(theme) {
+      const themeIcon = document.getElementById('themeToggle')?.querySelector('i');
+      const mobileThemeIcon = document.getElementById('mobileThemeIcon');
+      const mobileThemeLabel = document.getElementById('mobileThemeLabel');
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        if (themeIcon) themeIcon.className = 'fas fa-sun';
+        if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-sun';
+        if (mobileThemeLabel) mobileThemeLabel.textContent = 'Light';
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        if (themeIcon) themeIcon.className = 'fas fa-moon';
+        if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-moon';
+        if (mobileThemeLabel) mobileThemeLabel.textContent = 'Dark';
+      }
+    }
+    function toggleTheme() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const newTheme = isDark ? 'light' : 'dark';
+      localStorage.setItem('craftnest-theme', newTheme);
+      applyTheme(newTheme);
+    }
+    function toggleMobileTheme() { toggleTheme(); }
+
+    // ===== RTL TOGGLE =====
+    function applyRTL(mode) {
+      const rtlBtn = document.getElementById('rtlBtn');
+      const mobileRtlLabel = document.getElementById('mobileRtlLabel');
+      if (mode === 'rtl') {
+        document.documentElement.setAttribute('dir', 'rtl');
+        if (rtlBtn) rtlBtn.textContent = 'LTR';
+        if (mobileRtlLabel) mobileRtlLabel.textContent = 'LTR';
+      } else {
+        document.documentElement.removeAttribute('dir');
+        if (rtlBtn) rtlBtn.textContent = 'RTL';
+        if (mobileRtlLabel) mobileRtlLabel.textContent = 'RTL';
+      }
+    }
+    function toggleRTL() {
+      const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
+      const newMode = isRTL ? 'ltr' : 'rtl';
+      localStorage.setItem('craftnest-rtl', newMode);
+      applyRTL(newMode);
+    }
+    function toggleMobileRTL() { toggleRTL(); }
+
+    // ===== MOBILE MENU =====
+    function toggleMenu(open) {
+      const hamburger = document.getElementById('hamburger');
+      const mobileNav = document.getElementById('mobileNav');
+      const overlay = document.getElementById('navOverlay');
+      if (open) {
+        hamburger.classList.add('active');
+        mobileNav.classList.add('active');
+        if (overlay) overlay.classList.add('active');
+        document.body.classList.add('menu-open');
+      } else {
+        hamburger.classList.remove('active');
+        mobileNav.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
+        document.body.classList.remove('menu-open');
+      }
+    }
+    function closeMenu() { toggleMenu(false); }
+    document.getElementById('hamburger').addEventListener('click', function(e) {
+      e.stopPropagation();
+      const isOpen = document.getElementById('mobileNav').classList.contains('active');
+      toggleMenu(!isOpen);
+    });
+    document.getElementById('navOverlay').addEventListener('click', closeMenu);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { closeMenu(); document.querySelectorAll('.dropdown-content.show').forEach(d => d.classList.remove('show')); }
+    });
+    document.querySelectorAll('.mobile-nav-drawer ul li a').forEach(link => {
+      link.addEventListener('click', function() { if (!this.classList.contains('dropdown-toggle')) { closeMenu(); } });
+    });
+
+    // ===== SCROLL TO TOP =====
+    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+    // ===== FILTER TABS =====
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const categoryBlocks = document.querySelectorAll('.category-block');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-target');
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        categoryBlocks.forEach(block => {
+          if (target === 'all') {
+            block.classList.remove('hidden');
+          } else {
+            if (block.getAttribute('data-category') === target) {
+              block.classList.remove('hidden');
+            } else {
+              block.classList.add('hidden');
+            }
+          }
+        });
+        if (target !== 'all') {
+          const firstVisible = document.querySelector('.category-block:not(.hidden)');
+          if (firstVisible) {
+            const yOffset = -130;
+            const y = firstVisible.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        }
+      });
+    });
+
+    // ===== INIT =====
+    window.addEventListener('load', function() {
+      const savedTheme = localStorage.getItem('craftnest-theme') || 'light';
+      applyTheme(savedTheme);
+      const savedRTL = localStorage.getItem('craftnest-rtl') || 'ltr';
+      applyRTL(savedRTL);
+    });
+  </script>
+
+</body>
+</html>

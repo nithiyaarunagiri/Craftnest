@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>CraftNest · Artisan Stories</title>
+  <link rel="icon" type="image/jpeg" href="images/hero 1.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    /* ===== RESET & BASE ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f7f3ec;
+      --bg-dark: #3a2e26;
+      --text-primary: #3a2e26;
+      --text-secondary: #7a6a5c;
+      --text-light: #b0a294;
+      --border-color: #e8e0d4;
+      --accent: #7c5c3e;
+      --accent-light: #a8836a;
+      --accent-dark: #5a3f2a;
+      --accent-soft: #f5efe6;
+      --shadow: rgba(58, 46, 38, 0.08);
+      --card-bg: #ffffff;
+      --section-bg: #f7f3ec;
+      --navbar-bg: linear-gradient(135deg, #7c5c3e, #5a3f2a);
+      --navbar-border: #5a3f2a;
+      --transition: 0.3s ease;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #1c1814;
+      --bg-secondary: #14110d;
+      --text-primary: #f0e9df;
+      --text-secondary: #b5a695;
+      --text-light: #7a6a5c;
+      --border-color: #2b241d;
+      --shadow: rgba(0, 0, 0, 0.6);
+      --card-bg: #1c1814;
+      --section-bg: #14110d;
+      --navbar-bg: #1c1814;
+      --navbar-border: #2b241d;
+      --accent-soft: #2a211a;
+    }
+
+    [dir="rtl"] { text-align: right; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: background var(--transition), color var(--transition);
+      overflow-x: hidden;
+    }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--navbar-border);
+      background: var(--navbar-bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: background var(--transition), border-color var(--transition);
+    }
+    .navbar .logo-text,
+    .navbar .nav-links > li > a { color: #ffffff !important; }
+    .navbar .logo-text span { color: #ffffff !important; opacity: 0.7; }
+    .navbar .nav-links > li > a:hover { color: #e8d5bc !important; }
+    .navbar .nav-links > li > a.active { color: #e8d5bc !important; }
+
+    .logo, .footer-logo-link {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+    .logo:hover, .footer-logo-link:hover { transform: scale(1.03); }
+    .logo-icon {
+      width: 42px; height: 42px;
+      flex-shrink: 0;
+      transition: transform 0.4s ease;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+    }
+    .logo:hover .logo-icon { transform: rotate(-6deg); }
+    .logo-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    }
+    .logo-text span { font-weight: 300; letter-spacing: -0.5px; }
+
+    .nav-links {
+      display: flex; flex-wrap: wrap;
+      gap: 1.2rem;
+      align-items: center;
+      list-style: none;
+      font-weight: 500;
+    }
+    .nav-links > li > a {
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .dropdown { position: relative; cursor: pointer; }
+    .dropdown > a { display: flex; align-items: center; gap: 4px; }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background: #ffffff;
+      min-width: 160px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      padding: 0.6rem 0;
+      top: 1.8rem;
+      left: -10px;
+      z-index: 10;
+      border: 1px solid #e8e0d4;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    [data-theme="dark"] .dropdown-content { background: #2b241d; border: 1px solid #3d3226; }
+    [dir="rtl"] .dropdown-content { left: auto; right: -10px; }
+    .dropdown-content.show { display: block; opacity: 1; transform: translateY(0); }
+    .dropdown-content a {
+      display: block;
+      padding: 0.6rem 1.5rem;
+      color: #3a2e26 !important;
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    [data-theme="dark"] .dropdown-content a { color: #f0e9df !important; }
+    .dropdown-content a:hover { background: #f7f3ec; color: #7c5c3e !important; }
+    [data-theme="dark"] .dropdown-content a:hover { background: #1c1814; color: #a8836a !important; }
+    .dropdown-content a.active-drop { color: #7c5c3e !important; background: #f5efe6; font-weight: 700; }
+    [data-theme="dark"] .dropdown-content a.active-drop { color: #a8836a !important; background: #2a211a; }
+
+    .nav-controls { display: flex; align-items: center; gap: 0.7rem; }
+    .nav-controls .toggle-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1.5px solid rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: #ffffff;
+      font-size: 0.72rem; font-weight: 700;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    .nav-controls .toggle-btn i { color: #ffffff; font-size: 0.95rem; }
+    .nav-controls .toggle-btn:hover { background: rgba(255, 255, 255, 0.3); border-color: #ffffff; transform: translateY(-1px); }
+    [data-theme="dark"] .nav-controls .toggle-btn { background: rgba(255, 255, 255, 0.08); border: 1.5px solid rgba(255, 255, 255, 0.3); color: #f0e9df; }
+    [data-theme="dark"] .nav-controls .toggle-btn i { color: #f0e9df; }
+    [data-theme="dark"] .nav-controls .toggle-btn:hover { border-color: #a8836a; color: #a8836a; background: rgba(168, 131, 106, 0.1); }
+    [data-theme="dark"] .nav-controls .toggle-btn:hover i { color: #a8836a; }
+
+    .nav-controls .inspect-btn {
+      background: #ffffff;
+      color: #7c5c3e;
+      border: none;
+      padding: 0.65rem 1.5rem;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.25s;
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+    .nav-controls .inspect-btn i { color: #7c5c3e; }
+    .nav-controls .inspect-btn:hover { background: #f5efe6; transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35); }
+    [data-theme="dark"] .nav-controls .inspect-btn { background: var(--accent); color: #fff; box-shadow: 0 4px 12px rgba(124, 92, 62, 0.5); }
+    [data-theme="dark"] .nav-controls .inspect-btn i { color: #fff; }
+    [data-theme="dark"] .nav-controls .inspect-btn:hover { background: var(--accent-dark); box-shadow: 0 8px 20px rgba(124, 92, 62, 0.7); }
+
+    /* ===== COMMON ===== */
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      text-align: center;
+      color: var(--text-primary);
+    }
+    .section-title i { color: var(--accent); margin-right: 10px; }
+    .section-subtitle {
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+      font-size: 1.05rem;
+      text-align: center;
+      max-width: 640px;
+      margin-left: auto; margin-right: auto;
+    }
+    .btn-primary {
+      background: var(--accent);
+      border: none;
+      padding: 0.85rem 2.1rem;
+      border-radius: 60px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: 0.25s;
+      display: inline-flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(124, 92, 62, 0.5); }
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid var(--border-color);
+      padding: 0.8rem 1.9rem;
+      border-radius: 60px;
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: 0.25s;
+      display: inline-flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+
+    /* ===== 1. HERO — SPLIT (SHORTER + LIT UP) ===== */
+    .stories-hero {
+      background: linear-gradient(180deg, #fdfaf4 0%, #f7f0e3 100%);
+      padding: 2rem 0 2.5rem;
+      transition: background var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    [data-theme="dark"] .stories-hero {
+      background: linear-gradient(180deg, #221b15 0%, #1c1814 100%);
+    }
+    .stories-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 220, 160, 0.18), transparent 45%),
+        radial-gradient(circle at 80% 80%, rgba(255, 220, 160, 0.12), transparent 45%);
+      pointer-events: none;
+    }
+    .stories-hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .stories-hero-text { max-width: 560px; }
+    .stories-hero-text .hero-badge {
+      background: #ffffff;
+      color: var(--accent-dark);
+      padding: 0.4rem 1.1rem;
+      border-radius: 60px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 0.9rem;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 12px rgba(124, 92, 62, 0.06);
+    }
+    [data-theme="dark"] .stories-hero-text .hero-badge { background: #2a211a; color: var(--accent-light); }
+    .stories-hero-text .hero-badge i { color: var(--accent); }
+    .stories-hero-text h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      line-height: 1.15;
+      margin-bottom: 0.85rem;
+    }
+    .stories-hero-text h1 span { color: var(--accent); }
+    .stories-hero-text p {
+      font-size: 0.96rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1.3rem;
+    }
+    .stories-hero-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+      margin-bottom: 1.4rem;
+    }
+    .stories-hero-feature {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    .stories-hero-feature i { color: var(--accent); font-size: 0.9rem; flex-shrink: 0; }
+    .stories-hero-buttons { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+    /* 2x2 GRID — SQUARE CELLS, IMAGES FULLY VISIBLE */
+    .stories-hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 12px;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      max-width: 440px;
+      margin-left: auto;
+    }
+    .stories-hero-card {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #f5efe6;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 6px 20px var(--shadow);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+    .stories-hero-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 28px var(--shadow);
+    }
+    .stories-hero-card img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      padding: 6px;
+      transition: transform 0.5s ease;
+    }
+    .stories-hero-card:hover img { transform: scale(1.04); }
+    .stories-hero-card .card-tag {
+      position: absolute;
+      bottom: 9px;
+      left: 9px;
+      background: rgba(58, 46, 38, 0.85);
+      backdrop-filter: blur(6px);
+      color: #fff;
+      padding: 0.25rem 0.7rem;
+      border-radius: 60px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+    [dir="rtl"] .stories-hero-card .card-tag { left: auto; right: 9px; }
+
+    @media (max-width: 1024px) {
+      .stories-hero-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .stories-hero-text { max-width: 100%; text-align: center; margin: 0 auto; }
+      .stories-hero-features { max-width: 480px; margin-left: auto; margin-right: auto; }
+      .stories-hero-buttons { justify-content: center; }
+      .stories-hero-grid { max-width: 400px; margin: 0 auto; }
+    }
+    @media (max-width: 767px) {
+      .stories-hero { padding: 1.8rem 0 2rem; }
+      .stories-hero-text h1 { font-size: 1.7rem; }
+      .stories-hero-text p { font-size: 0.88rem; }
+      .stories-hero-features { grid-template-columns: 1fr; gap: 0.45rem; }
+      .stories-hero-buttons { flex-direction: column; align-items: center; width: 100%; max-width: 280px; margin: 0 auto; }
+      .stories-hero-buttons a { width: 100%; justify-content: center; }
+      .stories-hero-grid { max-width: 340px; gap: 10px; }
+      .stories-hero-card { border-radius: 14px; }
+    }
+    @media (max-width: 480px) {
+      .stories-hero-text h1 { font-size: 1.4rem; }
+      .stories-hero-text p { font-size: 0.82rem; line-height: 1.6; }
+      .stories-hero-text .hero-badge { font-size: 0.66rem; padding: 0.3rem 0.9rem; }
+      .stories-hero-grid { max-width: 280px; }
+      .stories-hero-card .card-tag { font-size: 0.55rem; padding: 0.22rem 0.6rem; bottom: 7px; left: 7px; }
+      [dir="rtl"] .stories-hero-card .card-tag { left: auto; right: 7px; }
+    }
+
+    /* ===== 2. FEATURED ARTISAN — IMAGE FULLY VISIBLE ===== */
+    .featured-artisan {
+      background: var(--bg-primary);
+      padding: 4.5rem 0;
+      transition: background var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .featured-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+    .featured-image {
+      border-radius: 28px;
+      overflow: hidden;
+      background: #f5efe6;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 20px 40px var(--shadow);
+      height: 480px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+    }
+    [data-theme="dark"] .featured-image { background: #2a211a; }
+    .featured-image img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto; height: auto;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      border-radius: 18px;
+    }
+    .featured-image .ribbon {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      background: var(--accent);
+      color: #fff;
+      padding: 0.4rem 1rem;
+      border-radius: 60px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      z-index: 2;
+    }
+    [dir="rtl"] .featured-image .ribbon { left: auto; right: 18px; }
+    .featured-content .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      padding: 0.4rem 1rem;
+      border-radius: 60px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 1rem;
+      border: 1px solid var(--border-color);
+    }
+    [data-theme="dark"] .featured-content .eyebrow { color: var(--accent-light); }
+    .featured-content h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin-bottom: 0.8rem;
+      letter-spacing: -0.02em;
+    }
+    .featured-content h2 span { color: var(--accent); }
+    .featured-content > p {
+      font-size: 0.98rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 1.3rem;
+    }
+    .featured-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding: 1.3rem 1.1rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+    }
+    .featured-stat { text-align: center; }
+    .featured-stat .num {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--accent);
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .featured-stat .lbl {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 600;
+    }
+    .featured-quote {
+      padding: 1.1rem 1.3rem;
+      border-left: 3px solid var(--accent);
+      background: var(--accent-soft);
+      border-radius: 0 12px 12px 0;
+      font-style: italic;
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    [dir="rtl"] .featured-quote { border-left: none; border-right: 3px solid var(--accent); border-radius: 12px 0 0 12px; }
+
+    @media (max-width: 1024px) {
+      .featured-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .featured-image { height: 440px; max-width: 560px; margin: 0 auto; width: 100%; }
+      .featured-content { max-width: 100%; }
+    }
+    @media (max-width: 767px) {
+      .featured-artisan { padding: 3rem 0; }
+      .featured-image { height: 380px; padding: 12px; }
+      .featured-content h2 { font-size: 1.6rem; }
+      .featured-content > p { font-size: 0.92rem; }
+      .featured-stats { padding: 1rem 0.8rem; gap: 0.6rem; }
+      .featured-stat .num { font-size: 1.15rem; }
+      .featured-stat .lbl { font-size: 0.6rem; }
+    }
+    @media (max-width: 480px) {
+      .featured-image { height: 320px; padding: 10px; }
+      .featured-content h2 { font-size: 1.4rem; }
+      .featured-quote { font-size: 0.83rem; padding: 0.9rem 1rem; }
+    }
+
+    /* ===== 3. ARTISAN GRID (6 CARDS) — IMAGE FULLY VISIBLE ===== */
+    .artisans-section {
+      background: var(--section-bg);
+      padding: 4rem 0 5rem;
+      transition: background var(--transition);
+    }
+    .artisans-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    .artisan-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px var(--shadow);
+      transition: 0.35s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .artisan-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px var(--shadow);
+      border-color: var(--accent);
+    }
+    .artisan-img {
+      width: 100%;
+      height: 280px;
+      overflow: hidden;
+      background: #f5efe6;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    [data-theme="dark"] .artisan-img { background: #2a211a; }
+    .artisan-img img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto; height: auto;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      border-radius: 14px;
+      transition: transform 0.5s ease;
+    }
+    .artisan-card:hover .artisan-img img { transform: scale(1.04); }
+    .artisan-craft {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(124, 92, 62, 0.94);
+      color: #fff;
+      padding: 0.3rem 0.85rem;
+      border-radius: 60px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      backdrop-filter: blur(6px);
+      z-index: 2;
+    }
+    [dir="rtl"] .artisan-craft { left: auto; right: 12px; }
+    .artisan-body { padding: 1.5rem 1.4rem 1.6rem; flex: 1; display: flex; flex-direction: column; }
+    .artisan-body h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+    .artisan-body .location {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 0.7rem;
+      font-weight: 500;
+    }
+    .artisan-body .location i { font-size: 0.72rem; }
+    .artisan-body p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: 1rem;
+    }
+    .artisan-body .story-link {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+    .artisan-card:hover .story-link i { transform: translateX(5px); }
+    [dir="rtl"] .artisan-card:hover .story-link i { transform: translateX(-5px); }
+
+    @media (max-width: 1024px) {
+      .artisans-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    }
+    @media (max-width: 767px) {
+      .artisans-section { padding: 3rem 0; }
+      .artisans-grid { grid-template-columns: 1fr; gap: 1.4rem; }
+      .artisan-img { height: 260px; padding: 10px; }
+    }
+    @media (max-width: 480px) {
+      .artisan-img { height: 240px; padding: 8px; }
+      .artisan-body { padding: 1.2rem 1rem 1.4rem; }
+      .artisan-body h3 { font-size: 1.05rem; }
+      .artisan-body p { font-size: 0.8rem; }
+    }
+
+    /* ===== 4. CRAFT HERITAGE ===== */
+    .heritage-section {
+      background: var(--bg-primary);
+      padding: 4rem 0;
+      transition: background var(--transition);
+    }
+    .heritage-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      text-align: center;
+      position: relative;
+    }
+    .heritage-quote-mark {
+      font-size: 5rem;
+      line-height: 1;
+      color: var(--accent);
+      opacity: 0.25;
+      font-family: Georgia, serif;
+      margin-bottom: -1.8rem;
+    }
+    .heritage-quote {
+      font-size: 1.4rem;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--text-primary);
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+    .heritage-author {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.6rem 1.2rem 0.6rem 0.6rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 60px;
+      box-shadow: 0 6px 16px var(--shadow);
+    }
+    .heritage-author-img {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .heritage-author-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .heritage-author-info { text-align: left; }
+    [dir="rtl"] .heritage-author-info { text-align: right; }
+    .heritage-author-info h4 { font-size: 0.88rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.05rem; }
+    .heritage-author-info span { font-size: 0.72rem; color: var(--text-light); font-weight: 500; }
+
+    @media (max-width: 767px) {
+      .heritage-section { padding: 3rem 0; }
+      .heritage-quote-mark { font-size: 4rem; margin-bottom: -1.3rem; }
+      .heritage-quote { font-size: 1.1rem; }
+    }
+    @media (max-width: 480px) {
+      .heritage-quote { font-size: 0.95rem; }
+      .heritage-author-img { width: 40px; height: 40px; }
+      .heritage-author-info h4 { font-size: 0.82rem; }
+      .heritage-author-info span { font-size: 0.68rem; }
+    }
+
+    /* ===== 5. CTA ===== */
+    .cta-wrap { padding: 0 1.5rem 2rem; }
+    .cta-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      border-radius: 32px;
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -20%;
+      width: 400px; height: 400px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+    }
+    .cta-section::after {
+      content: '';
+      position: absolute;
+      bottom: -60%; left: -15%;
+      width: 380px; height: 380px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 50%;
+    }
+    .cta-section h2 { color: #fff; font-size: 2.4rem; font-weight: 700; margin-bottom: 0.5rem; position: relative; z-index: 1; }
+    .cta-section p { color: rgba(255, 255, 255, 0.85); max-width: 580px; margin: 0 auto 1.8rem; font-size: 1.05rem; position: relative; z-index: 1; }
+    .cta-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; position: relative; z-index: 1; }
+    .cta-btn-primary {
+      background: #fff; color: var(--accent);
+      border: none; padding: 0.9rem 2.5rem;
+      border-radius: 60px;
+      font-weight: 700; font-size: 0.95rem;
+      cursor: pointer; transition: 0.25s;
+      display: inline-flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .cta-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); }
+    .cta-btn-secondary {
+      background: transparent; color: #fff;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      padding: 0.85rem 2.2rem;
+      border-radius: 60px;
+      font-weight: 600; font-size: 0.95rem;
+      cursor: pointer; transition: 0.25s;
+      display: inline-flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .cta-btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
+
+    /* ===== HAMBURGER & MOBILE NAV ===== */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 10px 12px;
+      border-radius: 8px;
+      z-index: 1001;
+      flex-shrink: 0;
+      position: fixed;
+      top: 15px; right: 15px;
+      background: var(--accent);
+      border: 1px solid var(--accent-dark);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    [data-theme="dark"] .hamburger { background: #1c1814; border: 1px solid #2b241d; }
+    .hamburger span { display: block; width: 26px; height: 3px; background: #ffffff; border-radius: 3px; transition: all 0.3s ease; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+    [dir="rtl"] .hamburger { right: auto; left: 15px; }
+
+    .mobile-nav-drawer {
+      position: fixed;
+      top: 0; right: -100%;
+      width: min(300px, 85vw);
+      height: 100vh;
+      background: var(--bg-primary);
+      border-left: 2px solid var(--accent);
+      z-index: 1000;
+      transition: right 0.3s ease;
+      overflow-y: auto;
+      box-shadow: -10px 0 30px var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+    [dir="rtl"] .mobile-nav-drawer { right: auto; left: -100%; border-left: none; border-right: 2px solid var(--accent); }
+    .mobile-nav-drawer.active { right: 0; }
+    [dir="rtl"] .mobile-nav-drawer.active { left: 0; right: auto; }
+
+    .drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 20px 14px 20px;
+      border-bottom: 1px solid var(--border-color);
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #7c5c3e, #5a3f2a);
+    }
+    [data-theme="dark"] .drawer-header { background: #1c1814; }
+    .drawer-header .logo-text { color: #ffffff !important; }
+    .drawer-header .logo-text span { color: #ffffff !important; opacity: 0.7; }
+    .close-drawer {
+      background: none; border: none; color: #ffffff;
+      font-size: 24px; cursor: pointer;
+      padding: 4px 8px; transition: 0.2s;
+      display: flex; align-items: center; justify-content: center; line-height: 1;
+    }
+    .close-drawer:hover { color: #e8d5bc; transform: rotate(90deg); }
+
+    .mobile-nav-drawer ul {
+      list-style: none; margin: 0; padding: 16px 20px 40px 20px;
+      display: flex; flex-direction: column; gap: 4px; flex: 1;
+    }
+    .mobile-nav-drawer ul li { width: 100%; }
+    .mobile-nav-drawer ul li a {
+      color: var(--text-primary); text-decoration: none;
+      font-size: 15px; font-weight: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px; border-radius: 8px;
+      transition: 0.2s; width: 100%; opacity: 0.8;
+    }
+    .mobile-nav-drawer ul li a:hover, .mobile-nav-drawer ul li a.active {
+      color: var(--accent); background: var(--bg-secondary); opacity: 1;
+    }
+    .mobile-cta {
+      margin-top: 12px; border-top: 1px solid var(--border-color);
+      padding-top: 14px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .mobile-cta .mobile-inspect-btn {
+      width: 100%; text-align: center; justify-content: center;
+      padding: 12px 16px; border-radius: 25px;
+      text-decoration: none; font-weight: 600; font-size: 14px;
+      display: flex; align-items: center; gap: 8px;
+      background: var(--accent); color: #fff; transition: 0.25s;
+    }
+    .mobile-cta .mobile-inspect-btn:hover { background: var(--accent-dark); transform: translateY(-2px); }
+
+    .mobile-actions { margin-top: 8px; gap: 8px; width: 100%; display: flex; flex-wrap: wrap; }
+    .mobile-actions button {
+      border-radius: 25px; padding: 8px 14px; flex: 1;
+      font-size: 13px; gap: 6px; min-width: 80px; height: 38px;
+      background: var(--bg-secondary); border: 1px solid var(--border-color);
+      color: var(--text-primary); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: 0.3s; font-weight: 500;
+    }
+    .mobile-actions button:hover { border-color: var(--accent); background: var(--accent-soft); }
+    .mobile-actions button i { font-size: 14px; }
+
+    .nav-overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); z-index: 999; }
+    .nav-overlay.active { display: block; }
+    body.menu-open { overflow: hidden !important; position: fixed !important; width: 100% !important; top: 0; left: 0; right: 0; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .nav-links { display: none !important; }
+      .nav-controls { display: none !important; }
+      .hamburger { display: flex !important; }
+    }
+    @media (max-width: 992px) {
+      .section-title { font-size: 1.8rem; }
+    }
+    @media (max-width: 767px) {
+      .cta-section { padding: 2rem 1.2rem; }
+      .cta-section h2 { font-size: 1.6rem; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+      .cta-btn-primary, .cta-btn-secondary { width: 100%; max-width: 280px; justify-content: center; }
+      .section-title { font-size: 1.5rem; }
+      .section-subtitle { font-size: 0.9rem; margin-bottom: 1.5rem; }
+      .btn-primary, .btn-secondary { padding: 0.7rem 1.6rem; font-size: 0.82rem; }
+    }
+    @media (max-width: 480px) {
+      .cta-section { padding: 1.5rem 1rem; border-radius: 20px; }
+      .cta-section h2 { font-size: 1.3rem; }
+      .cta-btn-primary, .cta-btn-secondary { padding: 0.6rem 1.5rem; font-size: 0.8rem; max-width: 100%; }
+      .section-title { font-size: 1.3rem; }
+      .section-subtitle { font-size: 0.8rem; margin-bottom: 1rem; }
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #3a2e26;
+      color: #b5a695;
+      padding: 3rem 0 1.5rem;
+      margin-top: 0;
+    }
+    [data-theme="dark"] footer { background: #100d0a; }
+    .footer-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2.5rem;
+      margin-bottom: 2rem;
+    }
+    .footer-box { display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-box p { display: flex; align-items: center; gap: 10px; }
+    .footer-box p i { width: 20px; color: var(--accent-light); text-align: center; flex-shrink: 0; }
+    .footer-box .footer-logo-link {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+      margin-bottom: 0.3rem;
+      transition: transform 0.3s ease;
+    }
+    .footer-box .footer-logo-link:hover { transform: scale(1.03); }
+    .footer-box .footer-logo-link .logo-icon { width: 42px; height: 42px; flex-shrink: 0; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25)); }
+    .footer-box .footer-logo-link .logo-text { font-size: 1.75rem; font-weight: 800; letter-spacing: -1px; color: #ffffff !important; line-height: 1; }
+    .footer-box .footer-logo-link .logo-text span { color: #ffffff; font-weight: 300; letter-spacing: -0.5px; opacity: 0.7; }
+    .footer-box p { font-size: 0.9rem; color: #b5a695; line-height: 1.8; }
+    .footer-box h2 { font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 0.3rem; letter-spacing: 0.5px; }
+    .footer-box a { color: #b5a695; text-decoration: none; font-size: 0.9rem; transition: 0.2s; display: block; line-height: 1.8; }
+    .footer-box a:hover { color: var(--accent-light); padding-left: 4px; }
+    [dir="rtl"] .footer-box a:hover { padding-left: 0; padding-right: 4px; }
+    .social { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+    .social a {
+      background: rgba(255, 255, 255, 0.06);
+      color: #b5a695;
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      transition: 0.3s ease;
+      text-decoration: none;
+    }
+    .social a:hover { background: var(--accent); color: #fff; transform: translateY(-3px); }
+    .social a.x-icon { font-size: 0; }
+    .social a.x-icon svg { width: 16px; height: 16px; fill: currentColor; }
+    .social a.x-icon:hover svg { fill: #fff; }
+    footer hr { max-width: 1280px; margin: 0 auto; border: none; border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 0 1.5rem; }
+    footer .copy { max-width: 1280px; margin: 1.2rem auto 0; padding: 0 1.5rem; text-align: center; font-size: 0.85rem; color: #7a6a5c; }
+    footer .copy span { color: var(--accent-light); }
+
+    @media (max-width: 1024px) and (min-width: 768px) {
+      .footer-container { grid-template-columns: 1fr 1fr; gap: 2rem; text-align: left; }
+      .footer-box:first-child { grid-column: 1 / 2; text-align: left !important; align-items: flex-start !important; }
+      .footer-box:first-child .footer-logo-link { justify-content: flex-start !important; }
+      .footer-box:first-child p { text-align: left !important; max-width: 400px; }
+      .footer-box:nth-child(2) { grid-column: 2 / 3; text-align: left !important; align-items: flex-start !important; }
+      .footer-box:nth-child(2) h2, .footer-box:nth-child(2) a { text-align: left !important; }
+      .footer-box:nth-child(3) { grid-column: 1 / 2; grid-row: 2; text-align: left !important; align-items: flex-start !important; }
+      .footer-box:nth-child(3) h2, .footer-box:nth-child(3) p { text-align: left !important; }
+      .footer-box:nth-child(4) { grid-column: 2 / 3; grid-row: 2; text-align: left !important; align-items: flex-start !important; }
+      .footer-box:nth-child(4) h2 { text-align: left !important; }
+      .footer-box:nth-child(4) .social { justify-content: flex-start !important; }
+      footer .copy { text-align: center !important; }
+    }
+    @media (max-width: 767px) {
+      footer { padding: 2rem 0 1rem; }
+      .footer-container { grid-template-columns: 1fr; gap: 1.5rem; text-align: left !important; padding: 0 1.5rem; }
+      .footer-box { text-align: left !important; align-items: flex-start !important; }
+      .footer-box .footer-logo-link { justify-content: flex-start !important; }
+      .footer-box .footer-logo-link .logo-icon { width: 34px; height: 34px; }
+      .footer-box .footer-logo-link .logo-text { font-size: 1.4rem !important; }
+      .footer-box p { text-align: left !important; font-size: 0.85rem; max-width: 100%; }
+      .footer-box h2 { text-align: left !important; font-size: 1rem; margin-bottom: 0.2rem; }
+      .footer-box a { text-align: left !important; font-size: 0.85rem; }
+      .footer-box .social { justify-content: flex-start !important; }
+      .social a { width: 34px; height: 34px; font-size: 0.85rem; }
+      .social a.x-icon svg { width: 14px; height: 14px; }
+      footer .copy { text-align: center !important; font-size: 0.75rem; padding: 0 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      footer { padding: 1.5rem 0 1rem; }
+      .footer-container { gap: 1.2rem; padding: 0 1.2rem; }
+      .footer-box .footer-logo-link .logo-icon { width: 28px; height: 28px; }
+      .footer-box .footer-logo-link .logo-text { font-size: 1.2rem !important; }
+      .footer-box p { font-size: 0.8rem; }
+      .footer-box h2 { font-size: 0.9rem; }
+      .footer-box a { font-size: 0.8rem; }
+      .social a { width: 30px; height: 30px; font-size: 0.75rem; }
+      .social a.x-icon svg { width: 12px; height: 12px; }
+      footer .copy { font-size: 0.65rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <div class="container" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; width:100%; padding:0;">
+      <a href="index.html" class="logo">
+        <svg class="logo-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="logoRing" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#a8836a"/>
+              <stop offset="100%" stop-color="#7c5c3e"/>
+            </linearGradient>
+            <linearGradient id="logoPot" x1="50%" y1="100%" x2="50%" y2="0%">
+              <stop offset="0%" stop-color="#5a3f2a"/>
+              <stop offset="55%" stop-color="#7c5c3e"/>
+              <stop offset="100%" stop-color="#a8836a"/>
+            </linearGradient>
+          </defs>
+          <circle cx="24" cy="24" r="21" fill="url(#logoRing)"/>
+          <circle cx="24" cy="24" r="17.5" fill="#f5efe6"/>
+          <path d="M16 20 L32 20 L30 30 Q24 34 18 30 Z" fill="url(#logoPot)"/>
+          <ellipse cx="24" cy="20" rx="8" ry="2.2" fill="#5a3f2a"/>
+          <circle cx="24" cy="25.5" r="2.2" fill="#f5efe6" opacity="0.85"/>
+          <circle cx="16" cy="16" r="1.4" fill="#7c5c3e"/>
+          <circle cx="32" cy="16" r="1.4" fill="#7c5c3e"/>
+        </svg>
+        <span class="logo-text">Craft<span>Nest</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li class="dropdown" id="homeDropdown">
+          <a href="#" onclick="toggleDropdown(event, 'dropdownHome')">Home <i class="fas fa-chevron-down" style="font-size:0.6rem;"></i></a>
+          <div class="dropdown-content" id="dropdownHome">
+            <a href="index.html">Home 1</a>
+            <a href="home2.html">Home 2</a>
+          </div>
+        </li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="artisans.html" class="active">Artisan Stories</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <div class="nav-controls">
+        <button class="toggle-btn" onclick="toggleRTL()" id="rtlBtn">RTL</button>
+        <button class="toggle-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode" id="themeToggle">
+          <i class="fas fa-moon"></i>
+        </button>
+        <a href="products.html" class="inspect-btn">
+          <i class="fas fa-shopping-bag"></i> Shop Collection
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HAMBURGER ===== -->
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- ===== MOBILE NAV DRAWER ===== -->
+  <div class="mobile-nav-drawer" id="mobileNav">
+    <div class="drawer-header">
+      <a href="index.html" class="logo">
+        <svg class="logo-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="logoRingM" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#a8836a"/>
+              <stop offset="100%" stop-color="#7c5c3e"/>
+            </linearGradient>
+            <linearGradient id="logoPotM" x1="50%" y1="100%" x2="50%" y2="0%">
+              <stop offset="0%" stop-color="#5a3f2a"/>
+              <stop offset="55%" stop-color="#7c5c3e"/>
+              <stop offset="100%" stop-color="#a8836a"/>
+            </linearGradient>
+          </defs>
+          <circle cx="24" cy="24" r="21" fill="url(#logoRingM)"/>
+          <circle cx="24" cy="24" r="17.5" fill="#f5efe6"/>
+          <path d="M16 20 L32 20 L30 30 Q24 34 18 30 Z" fill="url(#logoPotM)"/>
+          <ellipse cx="24" cy="20" rx="8" ry="2.2" fill="#5a3f2a"/>
+          <circle cx="24" cy="25.5" r="2.2" fill="#f5efe6" opacity="0.85"/>
+          <circle cx="16" cy="16" r="1.4" fill="#7c5c3e"/>
+          <circle cx="32" cy="16" r="1.4" fill="#7c5c3e"/>
+        </svg>
+        <span class="logo-text">Craft<span>Nest</span></span>
+      </a>
+      <button class="close-drawer" onclick="closeMenu()">✕</button>
+    </div>
+    <ul>
+      <li><a href="index.html">Home 1</a></li>
+      <li><a href="home2.html">Home 2</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="artisans.html" class="active">Artisan Stories</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li class="mobile-cta">
+        <a href="products.html" class="mobile-inspect-btn">
+          <i class="fas fa-shopping-bag"></i> Shop Collection
+        </a>
+      </li>
+      <li class="mobile-actions">
+        <button onclick="toggleMobileRTL()" id="mobileRtlBtn">
+          <i class="fas fa-exchange-alt"></i> <span id="mobileRtlLabel">RTL</span>
+        </button>
+        <button onclick="toggleMobileTheme()" id="mobileThemeBtn">
+          <i class="fas fa-moon" id="mobileThemeIcon"></i> <span id="mobileThemeLabel">Dark</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="nav-overlay" id="navOverlay" onclick="closeMenu()"></div>
+
+  <!-- ===== 1. HERO — SPLIT (SHORTER + LIT UP) ===== -->
+  <section class="stories-hero">
+    <div class="container">
+      <div class="stories-hero-inner">
+        <div class="stories-hero-text">
+          <span class="hero-badge">
+            <i class="fas fa-book-open"></i> Real Stories · Real Hands
+          </span>
+          <h1>The Hands Behind <span>Every Handmade Piece</span></h1>
+          <p>Meet the artisans of CraftNest — potters, weavers, and woodworkers who've spent their lives perfecting a craft. These are their stories, told in their own words.</p>
+          <div class="stories-hero-features">
+            <div class="stories-hero-feature"><i class="fas fa-users"></i> 180+ Artisan Makers</div>
+            <div class="stories-hero-feature"><i class="fas fa-award"></i> 12 Traditional Crafts</div>
+            <div class="stories-hero-feature"><i class="fas fa-map-marker-alt"></i> 12 Indian States</div>
+            <div class="stories-hero-feature"><i class="fas fa-heart"></i> Fair Trade Certified</div>
+          </div>
+          <div class="stories-hero-buttons">
+            <a href="#featured" class="btn-primary">
+              <i class="fas fa-star"></i> Featured Artisan
+            </a>
+            <a href="#artisans" class="btn-secondary">
+              <i class="fas fa-users"></i> View All Artisans
+            </a>
+          </div>
+        </div>
+
+        <div class="stories-hero-grid">
+          <div class="stories-hero-card">
+            <img src="images/story 1.jpg" alt="Artisan at work">
+            <span class="card-tag">Pottery</span>
+          </div>
+          <div class="stories-hero-card">
+            <img src="images/story 2.jpg" alt="Artisan at work">
+            <span class="card-tag">Weaving</span>
+          </div>
+          <div class="stories-hero-card">
+            <img src="images/story 3.jpg" alt="Artisan at work">
+            <span class="card-tag">Woodwork</span>
+          </div>
+          <div class="stories-hero-card">
+            <img src="images/story 4.jpg" alt="Artisan at work">
+            <span class="card-tag">Block Print</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 2. FEATURED ARTISAN ===== -->
+  <section class="featured-artisan" id="featured">
+    <div class="container">
+      <div class="featured-inner">
+        <div class="featured-image">
+          <span class="ribbon"><i class="fas fa-crown" style="margin-right:6px;"></i> Featured Artisan</span>
+          <img src="images/artisan 1.jpg" alt="Featured artisan at work">
+        </div>
+        <div class="featured-content">
+          <span class="eyebrow"><i class="fas fa-award"></i> Artisan Of The Month</span>
+          <h2>Meet Ramesh, The <span>Third-Generation Potter</span></h2>
+          <p>For over 40 years, Ramesh has shaped clay on the same wheel his grandfather built. Every vase, bowl, and mug he creates carries the weight of a family tradition — and the unmistakable mark of a master's hand.</p>
+          <div class="featured-stats">
+            <div class="featured-stat">
+              <span class="num">40+</span>
+              <span class="lbl">Years Crafting</span>
+            </div>
+            <div class="featured-stat">
+              <span class="num">3</span>
+              <span class="lbl">Generations</span>
+            </div>
+            <div class="featured-stat">
+              <span class="num">2200+</span>
+              <span class="lbl">Pieces Made</span>
+            </div>
+          </div>
+          <div class="featured-quote">
+            "I don't just make pots. I make memories that families will pass down — just like my grandfather passed this wheel to me."
+          </div>
+          <div class="stories-hero-buttons">
+            <a href="products.html" class="btn-primary">
+              <i class="fas fa-shopping-bag"></i> Shop His Work
+            </a>
+            <a href="about.html" class="btn-secondary">
+              <i class="fas fa-book-open"></i> Read His Full Story
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 3. ARTISAN GRID (6 CARDS) ===== -->
+  <section class="artisans-section" id="artisans">
+    <div class="container">
+      <h2 class="section-title"><i class="fas fa-users"></i> More Artisan Stories</h2>
+      <p class="section-subtitle">Six makers, six crafts, six families — each with a story worth telling. Tap any card to read their full journey.</p>
+
+      <div class="artisans-grid">
+
+        <div class="artisan-card">
+          <div class="artisan-img">
+            <span class="artisan-craft">Wood Carver</span>
+            <img src="images/artisan 2.jpg" alt="Wood Carver">
+          </div>
+          <div class="artisan-body">
+            <h3>Suresh Patel</h3>
+            <div class="location"><i class="fas fa-map-marker-alt"></i> Jodhpur, Rajasthan</div>
+            <p>For 22 years, Suresh has carved trays, bowls, and décor from reclaimed walnut — sanding every edge until it's silk-smooth.</p>
+            <a href="#" class="story-link">Read Story <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="artisan-card">
+          <div class="artisan-img">
+            <span class="artisan-craft">Master Weaver</span>
+            <img src="images/artisan 3.jpg" alt="Master Weaver">
+          </div>
+          <div class="artisan-body">
+            <h3>Lakshmi Devi</h3>
+            <div class="location"><i class="fas fa-map-marker-alt"></i> Varanasi, Uttar Pradesh</div>
+            <p>Lakshmi weaves rugs on a wooden loom her mother passed down. Each rug takes weeks and tells a story of patience.</p>
+            <a href="#" class="story-link">Read Story <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="artisan-card">
+          <div class="artisan-img">
+            <span class="artisan-craft">Block Printer</span>
+            <img src="images/artisan 4.jpg" alt="Block Printer">
+          </div>
+          <div class="artisan-body">
+            <h3>Imran Khan</h3>
+            <div class="location"><i class="fas fa-map-marker-alt"></i> Jaipur, Rajasthan</div>
+            <p>Imran hand-carves wooden blocks and stamps natural dyes onto cotton — keeping a 400-year-old Jaipur tradition alive.</p>
+            <a href="#" class="story-link">Read Story <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="artisan-card">
+          <div class="artisan-img">
+            <span class="artisan-craft">Ceramic Artist</span>
+            <img src="images/artisan 5.jpg" alt="Ceramic Artist">
+          </div>
+          <div class="artisan-body">
+            <h3>Meera Joshi</h3>
+            <div class="location"><i class="fas fa-map-marker-alt"></i> Ahmedabad, Gujarat</div>
+            <p>Meera combines traditional clay techniques with modern glazes — her stoneware bowls are sold in homes across 15 countries.</p>
+            <a href="#" class="story-link">Read Story <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="artisan-card">
+          <div class="artisan-img">
+            <span class="artisan-craft">Brass Artisan</span>
+            <img src="images/artisan 6.jpg" alt="Brass Artisan">
+          </div>
+          <div class="artisan-body">
+            <h3>Ravi Sharma</h3>
+            <div class="location"><i class="fas fa-map-marker-alt"></i> Moradabad, Uttar Pradesh</div>
+            <p>Ravi hand-hammers brass into mirrors, lamps, and décor — a craft his family has practiced for five generations.</p>
+            <a href="#" class="story-link">Read Story <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="artisan-card">
+          <div class="artisan-img">
+            <span class="artisan-craft">Basket Weaver</span>
+            <img src="images/artisan 7.jpg" alt="Basket Weaver">
+          </div>
+          <div class="artisan-body">
+            <h3>Kamala Bai</h3>
+            <div class="location"><i class="fas fa-map-marker-alt"></i> Bastar, Chhattisgarh</div>
+            <p>Kamala weaves baskets and storage from wild grass and bamboo — using techniques passed down through tribal tradition.</p>
+            <a href="#" class="story-link">Read Story <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4. CRAFT HERITAGE ===== -->
+  <section class="heritage-section">
+    <div class="heritage-wrap">
+      <div class="heritage-quote-mark">"</div>
+      <p class="heritage-quote">Craft is not something you do — it's something you inherit, protect, and pass on. Every handmade piece is a small act of resistance against a world that forgets.</p>
+      <div class="heritage-author">
+        <div class="heritage-author-img">
+          <img src="images/team 1.jpg" alt="Aarav Mehta">
+        </div>
+        <div class="heritage-author-info">
+          <h4>Aarav Mehta</h4>
+          <span>Founder, CraftNest</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 5. CTA ===== -->
+  <div class="cta-wrap">
+    <div class="cta-section">
+      <h2>Support A Real Artisan Today</h2>
+      <p>Every purchase from CraftNest goes directly to the maker — fair pay, sustainable materials, and craft that lasts generations.</p>
+      <div class="cta-buttons">
+        <a href="products.html" class="cta-btn-primary">
+          <i class="fas fa-shopping-bag"></i> Shop Their Craft
+        </a>
+        <a href="contact.html" class="cta-btn-secondary">
+          <i class="fas fa-envelope"></i> Become A Partner
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-box">
+        <a href="index.html" class="footer-logo-link" onclick="scrollToTop()">
+          <svg class="logo-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="logoRingF" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#a8836a"/>
+                <stop offset="100%" stop-color="#7c5c3e"/>
+              </linearGradient>
+              <linearGradient id="logoPotF" x1="50%" y1="100%" x2="50%" y2="0%">
+                <stop offset="0%" stop-color="#5a3f2a"/>
+                <stop offset="55%" stop-color="#7c5c3e"/>
+                <stop offset="100%" stop-color="#a8836a"/>
+              </linearGradient>
+            </defs>
+            <circle cx="24" cy="24" r="21" fill="url(#logoRingF)"/>
+            <circle cx="24" cy="24" r="17.5" fill="#f5efe6"/>
+            <path d="M16 20 L32 20 L30 30 Q24 34 18 30 Z" fill="url(#logoPotF)"/>
+            <ellipse cx="24" cy="20" rx="8" ry="2.2" fill="#5a3f2a"/>
+            <circle cx="24" cy="25.5" r="2.2" fill="#f5efe6" opacity="0.85"/>
+            <circle cx="16" cy="16" r="1.4" fill="#7c5c3e"/>
+            <circle cx="32" cy="16" r="1.4" fill="#7c5c3e"/>
+          </svg>
+          <span class="logo-text">Craft<span>Nest</span></span>
+        </a>
+        <p>CraftNest — handcrafted pottery, woodwork, and textiles made by skilled artisans and delivered with love to homes worldwide.</p>
+      </div>
+      <div class="footer-box">
+        <h2>Quick Links</h2>
+        <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+        <a href="products.html">Products</a>
+        <a href="artisans.html">Artisan Stories</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-box">
+        <h2>Contact</h2>
+        <p><i class="fas fa-map-marker-alt"></i> 42 Artisan Row, London</p>
+        <p><i class="fas fa-phone"></i> +44 20 7946 0958</p>
+        <p><i class="fas fa-envelope"></i> hello@craftnest.com</p>
+        <p><i class="fas fa-clock"></i> Mon - Sat : 9AM - 7PM</p>
+      </div>
+      <div class="footer-box">
+        <h2>Follow Us</h2>
+        <div class="social">
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+          <a href="#" aria-label="Twitter/X" class="x-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <p class="copy">© 2026 <span>CraftNest</span>. All Rights Reserved. Handmade with heart.</p>
+  </footer>
+
+  <script>
+    // ===== DROPDOWN TOGGLE =====
+    let dropdownOpen = false;
+    function toggleDropdown(e, id) {
+      e.preventDefault(); e.stopPropagation();
+      const content = document.getElementById(id);
+      dropdownOpen = !dropdownOpen;
+      content.classList.toggle('show', dropdownOpen);
+      document.querySelectorAll('.dropdown-content').forEach(dc => {
+        if (dc.id !== id) dc.classList.remove('show');
+      });
+    }
+    document.addEventListener('click', function(e) {
+      const dropdown = document.getElementById('homeDropdown');
+      if (dropdown && !dropdown.contains(e.target)) {
+        document.querySelectorAll('.dropdown-content').forEach(dc => dc.classList.remove('show'));
+        dropdownOpen = false;
+      }
+    });
+
+    // ===== THEME TOGGLE =====
+    function applyTheme(theme) {
+      const themeIcon = document.getElementById('themeToggle')?.querySelector('i');
+      const mobileThemeIcon = document.getElementById('mobileThemeIcon');
+      const mobileThemeLabel = document.getElementById('mobileThemeLabel');
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        if (themeIcon) themeIcon.className = 'fas fa-sun';
+        if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-sun';
+        if (mobileThemeLabel) mobileThemeLabel.textContent = 'Light';
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        if (themeIcon) themeIcon.className = 'fas fa-moon';
+        if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-moon';
+        if (mobileThemeLabel) mobileThemeLabel.textContent = 'Dark';
+      }
+    }
+    function toggleTheme() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const newTheme = isDark ? 'light' : 'dark';
+      localStorage.setItem('craftnest-theme', newTheme);
+      applyTheme(newTheme);
+    }
+    function toggleMobileTheme() { toggleTheme(); }
+
+    // ===== RTL TOGGLE =====
+    function applyRTL(mode) {
+      const rtlBtn = document.getElementById('rtlBtn');
+      const mobileRtlLabel = document.getElementById('mobileRtlLabel');
+      if (mode === 'rtl') {
+        document.documentElement.setAttribute('dir', 'rtl');
+        if (rtlBtn) rtlBtn.textContent = 'LTR';
+        if (mobileRtlLabel) mobileRtlLabel.textContent = 'LTR';
+      } else {
+        document.documentElement.removeAttribute('dir');
+        if (rtlBtn) rtlBtn.textContent = 'RTL';
+        if (mobileRtlLabel) mobileRtlLabel.textContent = 'RTL';
+      }
+    }
+    function toggleRTL() {
+      const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
+      const newMode = isRTL ? 'ltr' : 'rtl';
+      localStorage.setItem('craftnest-rtl', newMode);
+      applyRTL(newMode);
+    }
+    function toggleMobileRTL() { toggleRTL(); }
+
+    // ===== MOBILE MENU =====
+    function toggleMenu(open) {
+      const hamburger = document.getElementById('hamburger');
+      const mobileNav = document.getElementById('mobileNav');
+      const overlay = document.getElementById('navOverlay');
+      if (open) {
+        hamburger.classList.add('active');
+        mobileNav.classList.add('active');
+        if (overlay) overlay.classList.add('active');
+        document.body.classList.add('menu-open');
+      } else {
+        hamburger.classList.remove('active');
+        mobileNav.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
+        document.body.classList.remove('menu-open');
+      }
+    }
+    function closeMenu() { toggleMenu(false); }
+    document.getElementById('hamburger').addEventListener('click', function(e) {
+      e.stopPropagation();
+      const isOpen = document.getElementById('mobileNav').classList.contains('active');
+      toggleMenu(!isOpen);
+    });
+    document.getElementById('navOverlay').addEventListener('click', closeMenu);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { closeMenu(); document.querySelectorAll('.dropdown-content.show').forEach(d => d.classList.remove('show')); }
+    });
+    document.querySelectorAll('.mobile-nav-drawer ul li a').forEach(link => {
+      link.addEventListener('click', function() { if (!this.classList.contains('dropdown-toggle')) { closeMenu(); } });
+    });
+
+    // ===== SCROLL TO TOP =====
+    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+    // ===== INIT =====
+    window.addEventListener('load', function() {
+      const savedTheme = localStorage.getItem('craftnest-theme') || 'light';
+      applyTheme(savedTheme);
+      const savedRTL = localStorage.getItem('craftnest-rtl') || 'ltr';
+      applyRTL(savedRTL);
+    });
+  </script>
+
+</body>
+</html>
