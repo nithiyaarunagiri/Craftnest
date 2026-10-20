@@ -153,48 +153,97 @@
     .dropdown-content a.active-drop { color: #7c5c3e !important; background: #f5efe6; font-weight: 700; }
     [data-theme="dark"] .dropdown-content a.active-drop { color: #a8836a !important; background: #2a211a; }
 
-    .nav-controls { display: flex; align-items: center; gap: 0.7rem; }
+        /* ===== NAV CONTROLS FIXED HEIGHT ===== */
+    .nav-controls { 
+      display: flex; 
+      align-items: center; 
+      gap: 0.7rem; 
+      height: 44px; /* Set a fixed height for the whole container */
+    }
+
+    /* RTL & Theme Buttons */
     .nav-controls .toggle-btn {
       background: rgba(255, 255, 255, 0.15);
       border: 1.5px solid rgba(255, 255, 255, 0.5);
       border-radius: 50%;
-      width: 40px; height: 40px;
-      display: flex; align-items: center; justify-content: center;
+      width: 44px;   /* Increased to 44px */
+      height: 44px;  /* Increased to 44px */
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
       color: #ffffff;
-      font-size: 0.72rem; font-weight: 700;
+      font-size: 0.72rem;
+      font-weight: 700;
       transition: all 0.2s;
       font-family: 'Inter', sans-serif;
-      text-transform: uppercase; letter-spacing: 0.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      padding: 0; /* Remove any default padding */
+      box-sizing: border-box; /* Ensure borders don't add to height */
     }
+    
     .nav-controls .toggle-btn i { color: #ffffff; font-size: 0.95rem; }
-    .nav-controls .toggle-btn:hover { background: rgba(255, 255, 255, 0.3); border-color: #ffffff; transform: translateY(-1px); }
-    [data-theme="dark"] .nav-controls .toggle-btn { background: rgba(255, 255, 255, 0.08); border: 1.5px solid rgba(255, 255, 255, 0.3); color: #f0e9df; }
-    [data-theme="dark"] .nav-controls .toggle-btn i { color: #f0e9df; }
-    [data-theme="dark"] .nav-controls .toggle-btn:hover { border-color: #a8836a; color: #a8836a; background: rgba(168, 131, 106, 0.1); }
-    [data-theme="dark"] .nav-controls .toggle-btn:hover i { color: #a8836a; }
+    
+    .nav-controls .toggle-btn:hover { 
+      background: rgba(255, 255, 255, 0.3); 
+      border-color: #ffffff; 
+      transform: translateY(-1px); 
+    }
 
+    /* CTA Button (Shop Collection) */
     .nav-controls .inspect-btn {
       background: #ffffff;
       color: #7c5c3e;
       border: none;
-      padding: 0.65rem 1.5rem;
+      padding: 0 1.5rem; /* Keep horizontal padding, remove vertical */
+      height: 44px;      /* Force exactly 44px height */
       border-radius: 60px;
       font-weight: 700;
       font-size: 0.9rem;
       cursor: pointer;
       transition: 0.25s;
       text-decoration: none;
-      display: inline-flex; align-items: center; gap: 8px;
+      display: inline-flex; 
+      align-items: center; 
+      gap: 8px;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      box-sizing: border-box;
     }
-    .nav-controls .inspect-btn i { color: #7c5c3e; }
-    .nav-controls .inspect-btn:hover { background: #f5efe6; transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35); }
-    [data-theme="dark"] .nav-controls .inspect-btn { background: var(--accent); color: #fff; box-shadow: 0 4px 12px rgba(124, 92, 62, 0.5); }
-    [data-theme="dark"] .nav-controls .inspect-btn i { color: #fff; }
-    [data-theme="dark"] .nav-controls .inspect-btn:hover { background: var(--accent-dark); box-shadow: 0 8px 20px rgba(124, 92, 62, 0.7); }
 
+    .nav-controls .inspect-btn i { color: #7c5c3e; }
+    
+    .nav-controls .inspect-btn:hover { 
+      background: #f5efe6; 
+      transform: translateY(-2px); 
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35); 
+    }
+
+    /* Dark Mode Overrides */
+    [data-theme="dark"] .nav-controls .toggle-btn { 
+      background: rgba(255, 255, 255, 0.08); 
+      border: 1.5px solid rgba(255, 255, 255, 0.3); 
+      color: #f0e9df; 
+    }
+    [data-theme="dark"] .nav-controls .toggle-btn i { color: #f0e9df; }
+    [data-theme="dark"] .nav-controls .toggle-btn:hover { 
+      border-color: #a8836a; 
+      color: #a8836a; 
+      background: rgba(168, 131, 106, 0.1); 
+    }
+    [data-theme="dark"] .nav-controls .toggle-btn:hover i { color: #a8836a; }
+
+    [data-theme="dark"] .nav-controls .inspect-btn { 
+      background: var(--accent); 
+      color: #fff; 
+      box-shadow: 0 4px 12px rgba(124, 92, 62, 0.5); 
+    }
+    [data-theme="dark"] .nav-controls .inspect-btn i { color: #fff; }
+    [data-theme="dark"] .nav-controls .inspect-btn:hover { 
+      background: var(--accent-dark); 
+      box-shadow: 0 8px 20px rgba(124, 92, 62, 0.7); 
+    }
     /* ===== COMMON BUTTONS ===== */
     .btn-primary {
       background: var(--accent);
